@@ -1,12 +1,12 @@
 # coding:utf-8
-from flask import Flask, render_template, flash, url_for, redirect
+from flask import Flask, render_template, flash, url_for, redirect, request
 from flask_bootstrap import Bootstrap
 from flask_appconfig import AppConfig
 from flask_wtf import Form, RecaptchaField
 from wtforms import TextField, HiddenField, ValidationError, RadioField,\
     BooleanField, SubmitField, FileField, CameraField, SelectField
 from wtforms.validators import Required, InputRequired, Email
-
+import arrow
 
 class ExampleForm(Form):
     field1 = TextField(u'品牌名', validators=[Required()])
@@ -39,6 +39,8 @@ def create_app(configfile=None):
     def add():
         form = ExampleForm()
         if form.validate_on_submit():
+            ms = int(arrow.now().timestamp)
+            request.files['fileInput1'].save('zero/static/files/%f.jpg' % ms)
             return redirect(url_for('index'))
         return render_template('add.html', form=form)
 
