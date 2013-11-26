@@ -4,3 +4,4 @@ flask-wtf
 
 flask-appconfig
 pytest
+arrow
