@@ -2,8 +2,12 @@
 # Makefile
 # garlic, 2013-11-26 13:05
 #
+#
 
-all:
+touch:
+	touch run.py
+
+server:
 	python run.py
 
 testall:

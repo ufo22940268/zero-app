@@ -16,4 +16,8 @@ app = sample_app.create_app().test_client()
 
 def test_index():
     rv = app.get('/')
-    assert rv.data == 'ok'
+    assert rv.data.find('error') == -1
+
+def test_add():
+    rv = app.get('/add')
+    assert rv.data.find('error') == -1

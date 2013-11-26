@@ -44,7 +44,7 @@ def create_app(configfile=None):
 
     @app.route('/')
     def index():
-        return 'ok'
+        return render_template('index.html')
 
     return app
 
