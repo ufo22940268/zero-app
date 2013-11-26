@@ -1,0 +1,6 @@
+git+git://github.com/ufo22940268/wtforms.git@master
+flask-bootstrap
+flask-wtf
+
+flask-appconfig
+pytest
