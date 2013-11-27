@@ -8,6 +8,7 @@ from wtforms import TextField, HiddenField, ValidationError, RadioField,\
 from wtforms.validators import Required, InputRequired, Email
 import arrow
 from eve import Eve
+import os.path
 
 class ExampleForm(Form):
     field1 = TextField(u'品牌名', validators=[Required()])
@@ -25,7 +26,9 @@ class ExampleForm(Form):
 
 
 def create_app(configfile=None):
-    app = Eve(__name__, settings='/home/garlic/workspace/zero-app/zero_eve/settings.py')
+    THIS_DIRECTORY = os.path.dirname(os.path.realpath(__file__))
+    settings_file = os.path.join(THIS_DIRECTORY, 'settings.py')
+    app = Eve(__name__, settings=settings_file)
     #app = Flask(__name__)
     AppConfig(app, configfile)  # Flask-Appconfig is not necessary, but
                                 # highly recommend =)
