@@ -3,6 +3,8 @@ python:
   - "2.7"
 # command to install dependencies
 install: "pip install -r requirements.txt"
+services: 
+    - mongodb
 before_script:
     - "ulimit -n 1024"
     - mongo zero --eval 'db.addUser("root", "aa");'
