@@ -7,6 +7,7 @@ from wtforms import TextField, HiddenField, ValidationError, RadioField,\
     BooleanField, SubmitField, FileField, CameraField, SelectField
 from wtforms.validators import Required, InputRequired, Email
 import arrow
+from eve import Eve
 
 class ExampleForm(Form):
     field1 = TextField(u'品牌名', validators=[Required()])
@@ -24,7 +25,8 @@ class ExampleForm(Form):
 
 
 def create_app(configfile=None):
-    app = Flask(__name__)
+    app = Eve(__name__, settings='/home/garlic/workspace/zero-app/zero_eve/settings.py')
+    #app = Flask(__name__)
     AppConfig(app, configfile)  # Flask-Appconfig is not necessary, but
                                 # highly recommend =)
                                 # https://github.com/mbr/flask-appconfig
@@ -35,6 +37,10 @@ def create_app(configfile=None):
     app.config['RECAPTCHA_PUBLIC_KEY'] = \
         '6Lfol9cSAAAAADAkodaYl9wvQCwBMr3qGR_PPHcw'
 
+    @app.route('/index')
+    def index():
+        return render_template('index.html')
+
     @app.route('/add', methods=['POST', 'GET'])
     def add():
         form = ExampleForm()
@@ -44,14 +50,7 @@ def create_app(configfile=None):
             return redirect(url_for('index'))
         return render_template('add.html', form=form)
 
-    @app.route('/')
-    def index():
-        return render_template('index.html')
-
     return app
-
-if __name__ == '__main__':
-    create_app().run(debug=True)
 
 def run():
     create_app().run(debug=True)

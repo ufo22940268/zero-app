@@ -10,10 +10,10 @@
 
 """
 
-from zero import sample_app
+from zero import client
 import pytest
 
-app = sample_app.create_app().test_client()
+app = client.create_app().test_client()
 
 def test_index():
     rv = app.get('/')
@@ -23,6 +23,10 @@ def test_add():
     rv = app.get('/add')
     assert rv.data.find('error') == -1
 
-    #with pytest.raises(Exception):
-    rv = app.post('/add', {'field1': 'a'})
+    rv = app.post('/add', {'field1': 'a', 'field2': 'b'})
+    assert rv.data
     assert rv.data.find('camera') != -1
+
+#def test_eve():
+    #rv = app.get('/shop')
+    #print '********************', rv.data, '********************'

@@ -1,3 +1,3 @@
-from zero import sample_app
+from zero import client
 
-sample_app.run()
+client.run()

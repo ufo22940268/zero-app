@@ -1,4 +1,5 @@
 git+git://github.com/ufo22940268/wtforms.git@master
+git+git://github.com/nicolaiarocci/eve.git@master
 flask-bootstrap
 flask-wtf
 
