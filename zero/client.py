@@ -21,10 +21,6 @@ class ExampleForm(Form):
     ])
     submit_button = SubmitField(u'提交')
 
-    def validate_hidden_field(form, field):
-        raise ValidationError('Always wrong')
-
-
 def create_app(configfile=None):
     THIS_DIRECTORY = os.path.dirname(os.path.realpath(__file__))
     settings_file = os.path.join(THIS_DIRECTORY, 'settings.py')
@@ -39,6 +35,7 @@ def create_app(configfile=None):
     app.config['SECRET_KEY'] = 'devkey'
     app.config['RECAPTCHA_PUBLIC_KEY'] = \
         '6Lfol9cSAAAAADAkodaYl9wvQCwBMr3qGR_PPHcw'
+    app.config['WTF_CSRF_ENABLED'] = False
 
     @app.route('/index')
     def index():
@@ -48,8 +45,8 @@ def create_app(configfile=None):
     def add():
         form = ExampleForm()
         if form.validate_on_submit():
-            ms = int(arrow.now().timestamp)
-            request.files['fileInput1'].save('zero/static/files/%f.jpg' % ms)
+            #ms = int(arrow.now().timestamp)
+            #request.files['fileInput1'].save('zero/static/files/%f.jpg' % ms)
             return redirect(url_for('index'))
         return render_template('add.html', form=form)
 

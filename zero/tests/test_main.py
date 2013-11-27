@@ -14,7 +14,8 @@ from zero import client
 import pytest
 import json
 
-app = client.create_app().test_client()
+raw_app = client.create_app()
+app = raw_app.test_client()
 
 def test_index():
     rv = app.get('/')
@@ -25,6 +26,6 @@ def test_add():
     assert rv.data.find('error') == -1
 
     rv = app.post('/add',
-            data = {'field1': 'aaaaa', 'field2': 'b'})
+            data = {'field1': 'aaaaa', 'field2': 'b', 'radio_field': 'a'})
     assert rv.data
-    assert rv.data.find('camera') != -1
+    assert rv.data.find('submit') == -1
