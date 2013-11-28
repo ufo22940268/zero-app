@@ -36,7 +36,7 @@ def create_app(configfile=None):
     app.config['RECAPTCHA_PUBLIC_KEY'] = \
         '6Lfol9cSAAAAADAkodaYl9wvQCwBMr3qGR_PPHcw'
     app.config['WTF_CSRF_ENABLED'] = False
-    #app.config['BOOTSTRAP_SERVE_LOCAL'] = True
+    app.config['BOOTSTRAP_SERVE_LOCAL'] = True
 
     def get_db():
         return app.data.driver.db
@@ -66,6 +66,3 @@ def create_app(configfile=None):
         return render_template('add.html', form=form)
 
     return app
-
-def run():
-    create_app().run(debug=True)

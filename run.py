@@ -1,3 +1,4 @@
 from zero import client
 
-client.run()
+app = client.create_app()
+#app.run(port=10000, debug=True)

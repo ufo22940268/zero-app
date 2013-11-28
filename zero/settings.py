@@ -9,8 +9,15 @@ MONGO_PASSWORD = 'aa'
 MONGO_DBNAME = 'zero'
 
 # let's not forget the API entry point
-SERVER_NAME = '127.0.0.1:5000'
+#SERVER_NAME = '127.0.0.1:10000'
 
+def is_local():
+    return os.environ['USER'].find('ccheng') != -1 or os.environ['USER'].find('garlic') != -1
+
+if is_local():
+    SERVER_NAME = '127.0.0.1:10000'
+else:
+    SERVER_NAME = '192.241.196.189:10010'
 
 # Enable reads (GET), inserts (POST) and DELETE for resources/collections
 # (if you omit this line, the API will default to ['GET'] and provide
