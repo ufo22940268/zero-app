@@ -36,17 +36,32 @@ def create_app(configfile=None):
     app.config['RECAPTCHA_PUBLIC_KEY'] = \
         '6Lfol9cSAAAAADAkodaYl9wvQCwBMr3qGR_PPHcw'
     app.config['WTF_CSRF_ENABLED'] = False
+    #app.config['BOOTSTRAP_SERVE_LOCAL'] = True
+
+    def get_db():
+        return app.data.driver.db
 
     @app.route('/index')
     def index():
-        return render_template('index.html')
+        shops = reversed(list(get_db()['shop'].find()))
+        return render_template('index.html', shops=shops)
 
     @app.route('/add', methods=['POST', 'GET'])
     def add():
         form = ExampleForm()
         if form.validate_on_submit():
-            #ms = int(arrow.now().timestamp)
-            #request.files['fileInput1'].save('zero/static/files/%f.jpg' % ms)
+
+            file_url = ''
+            if request.files.get('fileInput1'):
+                ms = int(arrow.now().timestamp)
+                file_name  = '%f.jpg' % ms
+                request.files['fileInput1'].save('zero/static/files/%s' % file_name)
+                file_url = '/static/files/%s' % file_name
+            name = request.form['field1']
+            brand_name = request.form['field2']
+            if not file_url:
+                file_url = '/static/holder.png'
+            get_db()['shop'].insert({'name': name, 'brand_name': brand_name, 'image': file_url})
             return redirect(url_for('index'))
         return render_template('add.html', form=form)
 
